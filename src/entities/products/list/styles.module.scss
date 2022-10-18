@@ -1,0 +1,44 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  li {
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 200;
+    font-size: 16px;
+    border-bottom: 1px solid;
+    transition: 0.3s ease all;
+    cursor: pointer;
+    button {
+      opacity: 0;
+      transition: 0.3s ease all;
+    }
+    .name {
+      transition: 0.3s ease all;
+    }
+    &:hover {
+      .name {
+        opacity: 0.6;
+      }
+      button {
+        opacity: 1;
+      }
+    }
+  }
+  li:first-child {
+    font-weight: 600;
+    font-size: 18px;
+    cursor: default;
+  }
+}
+.item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.thumb {
+  padding: 1px;
+  background-color: red;
+}

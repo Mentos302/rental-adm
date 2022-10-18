@@ -1,0 +1,26 @@
+.root {
+  height: 100%;
+  width: 300px;
+  background-color: #fff;
+  border-radius: 20px;
+  overflow: scroll;
+}
+.branding {
+  padding: 20px 0;
+  font-size: 28px;
+  text-align: center;
+  background: #f5f6fb;
+}
+.nav {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-weight: 200;
+  font-size: 16px;
+  a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}

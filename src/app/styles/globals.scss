@@ -1,0 +1,71 @@
+@import "./normalize";
+@import "./reset";
+@import "./fonts";
+
+*::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+body {
+  font-family: "e-Ukraine";
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  background: #f5f6fb;
+  color: #000;
+}
+main {
+  width: 100%;
+}
+section {
+  padding: 30px 40px;
+  background: #fff;
+  border-radius: 5px;
+}
+h1 {
+  font-weight: 600;
+  font-size: 28px;
+}
+.container {
+  position: relative;
+  width: 1340px;
+  margin: 0 auto;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 200px;
+    width: 100%;
+    background: #484b60;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+}
+.heading {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  & > div {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    * {
+      cursor: pointer;
+    }
+  }
+}
+.btn {
+  padding: 10px 20px;
+  background: #484b60;
+  color: #fff;
+  border-radius: 5px;
+  transition: 0.3s ease all;
+  &:hover {
+    opacity: 0.9;
+  }
+  &-success {
+    background: #008a63;
+  }
+}

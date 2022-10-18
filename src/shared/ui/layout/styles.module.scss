@@ -1,0 +1,10 @@
+.root {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  gap: 50px;
+  overflow: hidden;
+}
