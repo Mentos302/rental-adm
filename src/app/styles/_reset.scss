@@ -135,7 +135,10 @@ button {
   outline: none;
   cursor: pointer;
 }
-input {
+input,
+textarea {
   border: 0;
   background: inherit;
+  outline: 0;
+  font-size: 16px;
 }

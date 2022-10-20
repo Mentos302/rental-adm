@@ -15,7 +15,9 @@ body {
   color: #000;
 }
 main {
+  height: 100%;
   width: 100%;
+  overflow: scroll;
 }
 section {
   padding: 30px 40px;
@@ -56,6 +58,7 @@ h1 {
     }
   }
 }
+
 .btn {
   padding: 10px 20px;
   background: #484b60;
@@ -67,5 +70,27 @@ h1 {
   }
   &-success {
     background: #008a63;
+  }
+}
+.animated {
+  transition: 0.3s ease all;
+  &:hover {
+    opacity: 0.6;
+  }
+}
+.input_box {
+  padding: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  line-height: 1;
+  font-size: 12px;
+  border-radius: 5px;
+  border: 1px solid #9f9fb8;
+  color: gray;
+  input {
+    font-size: 16px;
+    color: #000;
   }
 }
