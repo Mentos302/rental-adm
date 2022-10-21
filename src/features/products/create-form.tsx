@@ -2,8 +2,9 @@ import { FC } from "react";
 import Select from "react-select";
 import { DropzoneGallery } from "shared/ui/dropzone-gallery";
 import CATEGORIES from "shared/mocks/categories";
-import styles from "./styles.module.scss";
 import { ColorPicker } from "shared/ui/colors-picker";
+import { CharsList } from "shared/ui/chars-list";
+import styles from "./styles.module.scss";
 
 export const CreateProductForm: FC = () => {
   return (
@@ -21,6 +22,10 @@ export const CreateProductForm: FC = () => {
         <div className="input_box">
           <span>Зображення</span>
           <DropzoneGallery />
+        </div>
+        <div className="input_box">
+          <span>Характеристики</span>
+          <CharsList />
         </div>
         <div className="input_box">
           <span>Категорії</span>

@@ -1,0 +1,42 @@
+.list {
+  border: 1px solid #9f9fb8;
+  border-radius: 5px;
+}
+.item {
+  position: relative;
+  padding: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #9f9fb8;
+  color: #000;
+  font-weight: 200;
+  &:first-child {
+    font-weight: 400;
+    font-size: 14px;
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+  &:hover {
+    .remove {
+      opacity: 1;
+    }
+  }
+  input {
+    padding: 0;
+    font-size: 12px;
+  }
+}
+.remove {
+  opacity: 0;
+  position: absolute;
+  top: 55%;
+  right: 0;
+  transform: translate(0, -50%);
+  transition: 0.1s ease all;
+  &:hover {
+    opacity: 0.6;
+  }
+}
