@@ -57,6 +57,7 @@ export const DropzoneGallery = () => {
                       <button
                         onClick={() => onImageUpdate(index)}
                         type={"button"}
+                        className="animated"
                       >
                         <Image
                           src="/icons/edit.svg"
@@ -68,6 +69,7 @@ export const DropzoneGallery = () => {
                       <button
                         onClick={() => onImageRemove(index)}
                         type={"button"}
+                        className="animated"
                       >
                         <Image
                           src="/icons/delete.svg"

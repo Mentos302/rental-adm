@@ -1,0 +1,52 @@
+.root {
+  margin-bottom: 10px;
+  padding-left: 5px;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  font-size: 12px;
+  border-radius: 5px;
+  color: gray;
+  button {
+    color: #67a940;
+  }
+}
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.variation {
+  height: 20px;
+  width: 50px;
+  border: 1px solid #f8f8fe;
+  transition: 0.3s ease all;
+}
+.active {
+  position: relative;
+  button {
+    width: 100px;
+    border: 1px solid #484b5f;
+  }
+}
+.picker {
+  padding: 20px;
+  position: absolute;
+  left: -70px;
+  bottom: 30px;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid;
+}
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.list {
+  display: flex;
+  gap: 5px;
+}
+.control button:nth-child(2n) {
+  color: crimson;
+}
