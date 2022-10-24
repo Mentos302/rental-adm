@@ -1,26 +1,26 @@
-import { useState } from "react";
+import { FC } from "react";
 import Image from "next/image";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import styles from "./styles.module.scss";
 
-export const DropzoneGallery = () => {
-  const [images, setImages] = useState([]);
-  const maxNumber = 69;
+const MAX_PHOTO_QUANTITY = 8;
 
-  const onChange = (
-    imageList: ImageListType,
-    addUpdateIndex: number[] | undefined
-  ) => {
-    console.log(imageList, addUpdateIndex);
-    setImages(imageList as never[]);
+type propTypes = {
+  images: string[];
+  update: (images: string[]) => void;
+};
+
+export const DropzoneGallery: FC<propTypes> = ({ images, update }) => {
+  const onChange = (imageList: ImageListType) => {
+    update(imageList as any);
   };
 
   return (
     <ImageUploading
       multiple
-      value={images}
+      value={images as any}
       onChange={onChange}
-      maxNumber={maxNumber}
+      maxNumber={MAX_PHOTO_QUANTITY}
     >
       {({
         imageList,
