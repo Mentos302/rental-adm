@@ -1,11 +1,18 @@
-import { FC, KeyboardEventHandler, useRef, useState } from "react";
+import {
+  Dispatch,
+  FC,
+  KeyboardEventHandler,
+  SetStateAction,
+  useRef,
+  useState,
+} from "react";
 import Image from "next/image";
+import { Char } from "shared/api/@types/product";
 import styles from "./styles.module.scss";
 
-type Char = { key: string; value: string };
+type propTypes = { chars: Char[]; setChars: Dispatch<SetStateAction<Char[]>> };
 
-export const CharsList: FC = () => {
-  const [chars, setChars] = useState<Char[]>([]);
+export const CharsList: FC<propTypes> = ({ chars, setChars }) => {
   const [key, setKey] = useState<string>("");
   const [value, setValue] = useState<string>("");
   const keyInput = useRef<HTMLInputElement | null>(null);
@@ -34,6 +41,8 @@ export const CharsList: FC = () => {
 
   const handleEnterSubmit: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === "Enter") {
+      e.preventDefault();
+
       if (keyInput.current) keyInput.current.focus();
       addChar();
     }

@@ -26,8 +26,6 @@ export const Variations: FC<propTypes> = ({ vars, setVars }) => {
 
   const removeVar = () => {
     setVars(() => {
-      if (vars.length === 2) return [];
-
       let updated = vars.filter((_, i: number) => i !== activeVar);
 
       setActiveVar(updated.length - 1);
@@ -64,10 +62,12 @@ export const Variations: FC<propTypes> = ({ vars, setVars }) => {
       </ColorPicker>
       <div className="input_box">
         <span>Зображення</span>
-        <DropzoneGallery
-          images={vars[activeVar].images}
-          update={updateImages}
-        />
+        {vars[activeVar] && (
+          <DropzoneGallery
+            images={vars[activeVar].images}
+            update={updateImages}
+          />
+        )}
       </div>
     </>
   );

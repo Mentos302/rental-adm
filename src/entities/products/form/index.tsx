@@ -7,9 +7,9 @@ import {
 } from "react";
 import Select from "react-select";
 import { Variations } from "./variations";
+import { CharsList } from "./chars-list";
 import CATEGORIES from "shared/mocks/categories";
-import { CharsList } from "shared/ui/chars-list";
-import { Product, Variation } from "shared/api/@types/product";
+import { Char, Product, Variation } from "shared/api/@types/product";
 import styles from "./styles.module.scss";
 
 type propTypes = {
@@ -23,6 +23,7 @@ export const ProductForm: FC<propTypes> = ({ setProduct, featureSubmit }) => {
   const [vars, setVars] = useState<Variation[]>([
     { color: "#f3f3f3", images: [] },
   ]);
+  const [chars, setChars] = useState<Char[]>([]);
   const [price, setPrice] = useState<number | undefined>();
 
   const submitHandler: FormEventHandler<HTMLFormElement> = (ev) => {
@@ -58,7 +59,7 @@ export const ProductForm: FC<propTypes> = ({ setProduct, featureSubmit }) => {
         <Variations vars={vars} setVars={setVars} />
         <div className="input_box">
           <span>Характеристики</span>
-          <CharsList />
+          <CharsList chars={chars} setChars={setChars} />
         </div>
         <div className="input_box">
           <span>Категорії</span>
@@ -73,6 +74,7 @@ export const ProductForm: FC<propTypes> = ({ setProduct, featureSubmit }) => {
           <span>Ціна (грн.)</span>
           <input
             type="number"
+            placeholder="XXXX"
             min={0}
             required
             onChange={(ev) => setPrice(parseInt(ev.target.value))}
