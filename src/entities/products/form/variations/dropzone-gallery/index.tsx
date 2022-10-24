@@ -6,7 +6,7 @@ import styles from "./styles.module.scss";
 const MAX_PHOTO_QUANTITY = 8;
 
 type propTypes = {
-  images: string[];
+  images: string[] | undefined;
   update: (images: string[]) => void;
 };
 
@@ -32,7 +32,7 @@ export const DropzoneGallery: FC<propTypes> = ({ images, update }) => {
         dragProps,
       }) => (
         <div>
-          {images.length ? (
+          {images && images.length ? (
             <div
               className={styles.preview}
               style={{ height: Math.ceil(images.length / 4) * 200 }}
@@ -97,7 +97,7 @@ export const DropzoneGallery: FC<propTypes> = ({ images, update }) => {
             </div>
           )}
 
-          {images.length ? (
+          {images && images.length ? (
             <div className={styles.btns}>
               <button
                 style={isDragging ? { color: "red" } : undefined}

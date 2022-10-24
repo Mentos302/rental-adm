@@ -5,12 +5,13 @@ import {
   SetStateAction,
   useState,
 } from "react";
-import Select from "react-select";
+
 import { Variations } from "./variations";
 import { CharsList } from "./chars-list";
-import CATEGORIES from "shared/mocks/categories";
 import { Char, Product, Variation } from "shared/api/@types/product";
 import styles from "./styles.module.scss";
+import { Categories } from "./categories";
+import { Category } from "shared/api/@types/category";
 
 type propTypes = {
   setProduct: Dispatch<SetStateAction<Product | undefined>>;
@@ -20,16 +21,15 @@ type propTypes = {
 export const ProductForm: FC<propTypes> = ({ setProduct, featureSubmit }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [vars, setVars] = useState<Variation[]>([
-    { color: "#f3f3f3", images: [] },
-  ]);
+  const [vars, setVars] = useState<Variation[]>([{ color: "#f3f3f3" }]);
   const [chars, setChars] = useState<Char[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [price, setPrice] = useState<number | undefined>();
 
   const submitHandler: FormEventHandler<HTMLFormElement> = (ev) => {
     ev.preventDefault();
 
-    console.log(name, description, price, vars);
+    console.log(name, description, categories, price, vars);
   };
 
   return (
@@ -63,12 +63,7 @@ export const ProductForm: FC<propTypes> = ({ setProduct, featureSubmit }) => {
         </div>
         <div className="input_box">
           <span>Категорії</span>
-          <Select
-            isMulti
-            placeholder="Оберіть потрібні категорії"
-            options={CATEGORIES}
-            className={styles.select}
-          />
+          <Categories categories={categories} setCategories={setCategories} />
         </div>
         <div className="input_box">
           <span>Ціна (грн.)</span>
