@@ -12,7 +12,7 @@ export const ProductsListPage: NextPage = () => {
     <Layout>
       <section>
         <div className="heading">
-          <h1>Список товарів</h1>
+          <h1>Товари</h1>
           <div>
             <Image
               src="/icons/search.svg"

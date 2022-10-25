@@ -20,13 +20,13 @@ export const Sibebar: FC = () => {
               <span>Товари</span>
             </a>
           </Link>
-          <Link href="/">
+          <Link href="/categories">
             <a>
               <Image src="/icons/apps.svg" alt="icon" width={20} height={20} />
               <span>Категорії</span>
             </a>
           </Link>
-          <Link href="/kits">
+          <Link href="/sets">
             <a>
               <Image
                 src="/icons/layers.svg"
@@ -37,7 +37,6 @@ export const Sibebar: FC = () => {
               <span>Набори</span>
             </a>
           </Link>
-
           <Link href="/orders">
             <a>
               <Image

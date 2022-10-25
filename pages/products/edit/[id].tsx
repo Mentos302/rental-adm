@@ -1,3 +1,3 @@
-import { EditProductPage } from "pages/edit-product";
+import { EditProductPage } from "pages/products/edit-product";
 
 export default EditProductPage;

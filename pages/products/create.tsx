@@ -1,3 +1,3 @@
-import { CreateProductPage } from "pages/create-product";
+import { CreateProductPage } from "pages/products/create";
 
 export default CreateProductPage;

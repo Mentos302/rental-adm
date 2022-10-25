@@ -1,4 +1,5 @@
 import { FC } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { Product } from "shared/api/@types/product";
 import styles from "./styles.module.scss";
@@ -11,17 +12,20 @@ export const ProductsList: FC<propTypes> = ({ products }) => {
       <li>Мініатюра та назва</li>
       {products.map((pr, i) => (
         <li key={i}>
-          <div className={styles.item}>
-            <Image
-              src="/mocks/162188.jpeg"
-              alt="mock"
-              width={50}
-              height={50}
-              objectFit={"contain"}
-              objectPosition={"center"}
-            />
-            <span className={styles.name}>{pr.name}</span>
-          </div>
+          <Link href="/products/edit/31">
+            <div className={styles.item}>
+              <Image
+                src="/mocks/162188.jpeg"
+                alt="mock"
+                width={50}
+                height={50}
+                objectFit={"contain"}
+                objectPosition={"center"}
+              />
+              <span className={styles.name}>{pr.name}</span>
+            </div>
+          </Link>
+
           <button>
             <Image
               src="/icons/delete.svg"
