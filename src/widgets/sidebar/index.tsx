@@ -20,6 +20,12 @@ export const Sibebar: FC = () => {
               <span>Товари</span>
             </a>
           </Link>
+          <Link href="/">
+            <a>
+              <Image src="/icons/apps.svg" alt="icon" width={20} height={20} />
+              <span>Категорії</span>
+            </a>
+          </Link>
           <Link href="/kits">
             <a>
               <Image

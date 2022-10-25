@@ -31,6 +31,7 @@ export const Categories: FC<propTypes> = memo(({ categories }) => {
       defaultValue={defaultValue}
       className={styles.select}
       onChange={changeHandler}
+      instanceId="long-value-selectASF"
     />
   );
 });

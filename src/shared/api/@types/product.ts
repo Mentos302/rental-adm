@@ -1,6 +1,6 @@
 export type Variation = {
   color: string;
-  images?: string[];
+  images?: any;
 };
 
 export type Char = { key: string; value: string };

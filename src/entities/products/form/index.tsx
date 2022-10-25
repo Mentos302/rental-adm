@@ -1,16 +1,9 @@
-import {
-  FC,
-  FormEventHandler,
-  useCallback,
-  useReducer,
-  useRef,
-  useState,
-} from "react";
-import { Product } from "shared/api/@types/product";
+import { FC, FormEventHandler, useReducer, useRef, useState } from "react";
+import { INITIAL_PRODUCT, ProductFormContext, productReducer } from "./model";
 import { Categories } from "./categories";
 import { CharsList } from "./chars-list";
-import { INITIAL_PRODUCT, ProductFormContext, productReducer } from "./model";
 import { Variations } from "./variations";
+import { Product } from "shared/api/@types/product";
 import styles from "./styles.module.scss";
 
 type propTypes = { product?: Product };
@@ -27,46 +20,40 @@ export const ProductForm: FC<propTypes> = ({ product = INITIAL_PRODUCT }) => {
   const submitHandler: FormEventHandler<HTMLFormElement> = (ev) => {
     ev.preventDefault();
 
-    console.log(nameRef.current && nameRef.current.value);
+    console.log({
+      name: nameRef.current && nameRef.current.value,
+      description: descriptionRef.current && descriptionRef.current.value,
+      variations,
+      categories,
+      chars,
+      price: priceRef.current && priceRef.current.value,
+    });
   };
 
-  const editHandler = useCallback(() => {
+  const editHandler = () => {
     if (!isEdited) setIsEdited(true);
-  }, [isEdited]);
+  };
 
   return (
     <ProductFormContext.Provider value={{ dispatch, editHandler }}>
       <form onSubmit={submitHandler}>
-        <div className={styles.submit}>
-          {product ? (
-            <button
-              type={isEdited ? "submit" : "button"}
-              className={`btn btn-info ${isEdited ? null : "disabled"}`}
-            >
-              Зберегти
-            </button>
-          ) : (
-            <button type="submit" className="btn btn-success">
-              Додати
-            </button>
-          )}
-        </div>
         <div className="input_box">
           <span>Назва</span>
           <input
             type="text"
+            defaultValue={product.name}
             required
             ref={nameRef}
-            name="name"
             onChange={editHandler}
           />
         </div>
         <div className="input_box">
           <span>Опис</span>
           <textarea
+            defaultValue={product.description}
+            required
             ref={descriptionRef}
             rows={5}
-            name="description"
             onChange={editHandler}
           ></textarea>
         </div>
@@ -83,6 +70,7 @@ export const ProductForm: FC<propTypes> = ({ product = INITIAL_PRODUCT }) => {
           <span>Ціна (грн.)</span>
           <input
             type="number"
+            defaultValue={product.price || ""}
             required
             ref={priceRef}
             placeholder="XXXX"
@@ -90,6 +78,20 @@ export const ProductForm: FC<propTypes> = ({ product = INITIAL_PRODUCT }) => {
             onChange={editHandler}
           />
         </div>
+        {product.name ? (
+          <button
+            type={isEdited ? "submit" : "button"}
+            className={`btn btn-info ${isEdited ? null : "disabled"} ${
+              styles.add_btn
+            }`}
+          >
+            Зберегти
+          </button>
+        ) : (
+          <button type="submit" className={`btn btn-success ${styles.add_btn}`}>
+            Додати
+          </button>
+        )}
       </form>
     </ProductFormContext.Provider>
   );

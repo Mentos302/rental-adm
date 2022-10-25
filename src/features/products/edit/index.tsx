@@ -8,15 +8,15 @@ const PRODUCT: Product = {
   variations: [
     {
       color: "#f3f3f3",
-      images: [],
+      images: ["https://picsum.photos/1500"],
     },
     {
       color: "#f3f3f3",
       images: [],
     },
   ],
-  categories: [],
-  chars: [],
+  categories: ["Полки"],
+  chars: [{ key: "Розмір", value: "Великий" }],
   price: 2500,
 };
 
