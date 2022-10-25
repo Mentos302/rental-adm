@@ -71,6 +71,10 @@ h1 {
   &-success {
     background: #008a63;
   }
+  &.disabled {
+    background: #d6d6d6;
+    cursor: default;
+  }
 }
 .animated {
   transition: 0.3s ease all;

@@ -1,22 +1,26 @@
-import { Dispatch, FC, SetStateAction } from "react";
+import { FC, memo, useContext } from "react";
 import Select from "react-select";
-import { Category } from "shared/api/@types/category";
+import { ProductFormContext } from "../model";
 import CATEGORIES from "shared/mocks/categories";
 import styles from "./styles.module.scss";
 
-type propTypes = {
-  categories: string[];
-  setCategories: Dispatch<SetStateAction<string[]>>;
-};
+type propTypes = { categories: string[] };
 
-export const Categories: FC<propTypes> = ({ categories, setCategories }) => {
+export const Categories: FC<propTypes> = memo(({ categories }) => {
+  const { dispatch, editHandler } = useContext(ProductFormContext)!;
+
   const defaultValue = categories.map((cat) => ({
     label: cat,
     value: cat,
   }));
 
   const changeHandler = (options: any) => {
-    setCategories(options.map((op: { value: string }) => op.value));
+    dispatch({
+      type: "UPDATE_CATEGORIES",
+      payload: options.map((op: { value: string }) => op.value),
+    });
+
+    editHandler();
   };
 
   return (
@@ -29,4 +33,4 @@ export const Categories: FC<propTypes> = ({ categories, setCategories }) => {
       onChange={changeHandler}
     />
   );
-};
+});

@@ -1,18 +1,19 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import Image from "next/image";
 import ImageUploading, { ImageListType } from "react-images-uploading";
+import { MAX_PHOTO_QUANTITY, VariationContext } from "../model";
 import styles from "./styles.module.scss";
-
-const MAX_PHOTO_QUANTITY = 8;
 
 type propTypes = {
   images: string[] | undefined;
-  update: (images: string[]) => void;
+  update: (type: "images" | "color", payload: string | string[]) => void;
 };
 
-export const DropzoneGallery: FC<propTypes> = ({ images, update }) => {
+export const DropzoneGallery: FC<propTypes> = ({ images }) => {
+  const { updateVar } = useContext(VariationContext)!;
+
   const onChange = (imageList: ImageListType) => {
-    update(imageList as any);
+    updateVar("images", imageList as any);
   };
 
   return (

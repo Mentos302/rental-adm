@@ -1,21 +1,16 @@
-import { Dispatch, FC, ReactNode, SetStateAction, useState } from "react";
+import { FC, ReactNode, useContext, useState } from "react";
 import { HexColorPicker } from "react-colorful";
+import { VariationContext } from "../model";
 import { Variation } from "shared/api/@types/product";
 import styles from "./styles.module.scss";
 
 type propTypes = {
   children: ReactNode[];
-  context: {
-    vars: Variation[];
-    setVars: Dispatch<SetStateAction<Variation[]>>;
-    activeVar: number;
-    setActiveVar: Dispatch<SetStateAction<number>>;
-  };
 };
 
-export const ColorPicker: FC<propTypes> = ({ children, context }) => {
-  const { vars, setVars } = context;
-  const { activeVar, setActiveVar } = context;
+export const ColorPicker: FC<propTypes> = ({ children }) => {
+  const { vars, activeVar, setActiveVar, updateVar } =
+    useContext(VariationContext)!;
   const [choosingColor, setChoosingColor] = useState<string>("");
   const [pickerIndex, setPickerIndex] = useState<number | null>(null);
 
@@ -27,14 +22,6 @@ export const ColorPicker: FC<propTypes> = ({ children, context }) => {
     }
   };
 
-  const onChangeHandler = (color: string, i: number) => {
-    let items = [...vars];
-    let item = items[i];
-    item.color = color;
-    items[i] = item;
-    setVars([...items]);
-  };
-
   return (
     <div className={styles.root}>
       {vars.length > 1 ? (
@@ -44,6 +31,7 @@ export const ColorPicker: FC<propTypes> = ({ children, context }) => {
             <div className={styles.list}>
               {vars.map((vari: Variation, i: number) => (
                 <div
+                  key={i}
                   className={activeVar === i ? styles.active : ""}
                   onClick={() => openPicker(i)}
                 >
@@ -51,7 +39,7 @@ export const ColorPicker: FC<propTypes> = ({ children, context }) => {
                     <div className={styles.picker}>
                       <HexColorPicker
                         color={choosingColor}
-                        onChange={(color) => onChangeHandler(color, i)}
+                        onChange={(color) => updateVar("color", color)}
                       />
                     </div>
                   ) : null}

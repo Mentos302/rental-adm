@@ -1,50 +1,59 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
-import { Variation } from "shared/api/@types/product";
+import { FC, memo, useContext, useState } from "react";
+import { ProductFormContext } from "../model";
+import { MAX_VARIATIONS, VariationContext } from "./model";
 import { ColorPicker } from "./colors-picker";
 import { DropzoneGallery } from "./dropzone-gallery";
+import { Variation } from "shared/api/@types/product";
 
-const MAX_VARIATIONS = 6;
+type propTypes = { vars: Variation[] };
 
-type propTypes = {
-  vars: Variation[];
-  setVars: Dispatch<SetStateAction<Variation[]>>;
-};
-
-export const Variations: FC<propTypes> = ({ vars, setVars }) => {
+export const Variations: FC<propTypes> = memo(({ vars }) => {
+  const { dispatch, editHandler } = useContext(ProductFormContext)!;
   const [activeVar, setActiveVar] = useState(0);
 
-  const context = { vars, setVars, activeVar, setActiveVar };
-
   const addVar = () => {
-    vars.length < MAX_VARIATIONS &&
-      setVars(() => {
-        setActiveVar(vars.length);
-
-        return [...vars, { color: "#f3f3f3", images: [] }];
+    if (vars.length < MAX_VARIATIONS) {
+      dispatch({
+        type: "ADD_VARIATION",
+        payload: { color: "#f3f3f3", images: [] },
       });
+
+      setActiveVar(vars.length);
+
+      editHandler();
+    }
   };
 
   const removeVar = () => {
-    setVars(() => {
-      let updated = vars.filter((_, i: number) => i !== activeVar);
-
-      setActiveVar(updated.length - 1);
-
-      return updated;
+    dispatch({
+      type: "REMOVE_VARIATION",
+      payload: activeVar,
     });
+
+    setActiveVar(vars.length - 2);
+
+    editHandler();
   };
 
-  const updateImages = (images: string[]) => {
+  const updateVar = (type: "images" | "color", payload: string | string[]) => {
     let items = [...vars];
     let item = items[activeVar];
-    item.images = [...images];
+    item[type] = payload as any;
     items[activeVar] = item;
-    setVars([...items]);
+
+    dispatch({
+      type: "UPDATE_VARIATION",
+      payload: items,
+    });
+
+    editHandler();
   };
 
   return (
-    <>
-      <ColorPicker context={context}>
+    <VariationContext.Provider
+      value={{ vars, activeVar, setActiveVar, updateVar }}
+    >
+      <ColorPicker>
         <>
           <button type="button" onClick={addVar}>
             додати
@@ -62,13 +71,8 @@ export const Variations: FC<propTypes> = ({ vars, setVars }) => {
       </ColorPicker>
       <div className="input_box">
         <span>Зображення</span>
-        {vars[activeVar] && (
-          <DropzoneGallery
-            images={vars[activeVar].images}
-            update={updateImages}
-          />
-        )}
+        <DropzoneGallery images={vars[activeVar].images} update={updateVar} />
       </div>
-    </>
+    </VariationContext.Provider>
   );
-};
+});

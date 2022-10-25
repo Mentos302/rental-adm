@@ -1,81 +1,96 @@
 import {
-  Dispatch,
   FC,
   FormEventHandler,
-  SetStateAction,
+  useCallback,
+  useReducer,
+  useRef,
   useState,
 } from "react";
-
-import { Variations } from "./variations";
-import { CharsList } from "./chars-list";
-import { Char, Product, Variation } from "shared/api/@types/product";
-import styles from "./styles.module.scss";
+import { Product } from "shared/api/@types/product";
 import { Categories } from "./categories";
-import { Category } from "shared/api/@types/category";
+import { CharsList } from "./chars-list";
+import { INITIAL_PRODUCT, ProductFormContext, productReducer } from "./model";
+import { Variations } from "./variations";
+import styles from "./styles.module.scss";
 
-type propTypes = {
-  setProduct: Dispatch<SetStateAction<Product | undefined>>;
-  featureSubmit: () => void;
-};
+type propTypes = { product?: Product };
 
-export const ProductForm: FC<propTypes> = ({ setProduct, featureSubmit }) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [vars, setVars] = useState<Variation[]>([{ color: "#f3f3f3" }]);
-  const [chars, setChars] = useState<Char[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
-  const [price, setPrice] = useState<number | undefined>();
+export const ProductForm: FC<propTypes> = ({ product = INITIAL_PRODUCT }) => {
+  const [state, dispatch] = useReducer(productReducer, product);
+  const [isEdited, setIsEdited] = useState(false);
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement | null>(null);
+  const priceRef = useRef<HTMLInputElement | null>(null);
+
+  const { variations, categories, chars } = state;
 
   const submitHandler: FormEventHandler<HTMLFormElement> = (ev) => {
     ev.preventDefault();
 
-    console.log(name, description, categories, price, vars);
+    console.log(nameRef.current && nameRef.current.value);
   };
 
+  const editHandler = useCallback(() => {
+    if (!isEdited) setIsEdited(true);
+  }, [isEdited]);
+
   return (
-    <>
+    <ProductFormContext.Provider value={{ dispatch, editHandler }}>
       <form onSubmit={submitHandler}>
         <div className={styles.submit}>
-          <button type="submit" className="btn btn-success">
-            Додати
-          </button>
+          {product ? (
+            <button
+              type={isEdited ? "submit" : "button"}
+              className={`btn btn-info ${isEdited ? null : "disabled"}`}
+            >
+              Зберегти
+            </button>
+          ) : (
+            <button type="submit" className="btn btn-success">
+              Додати
+            </button>
+          )}
         </div>
         <div className="input_box">
           <span>Назва</span>
           <input
             type="text"
             required
-            defaultValue={name}
-            onChange={(ev) => setName(ev.target.value)}
+            ref={nameRef}
+            name="name"
+            onChange={editHandler}
           />
         </div>
         <div className="input_box">
           <span>Опис</span>
           <textarea
+            ref={descriptionRef}
             rows={5}
-            onChange={(ev) => setDescription(ev.target.value)}
+            name="description"
+            onChange={editHandler}
           ></textarea>
         </div>
-        <Variations vars={vars} setVars={setVars} />
+        <Variations vars={variations} />
         <div className="input_box">
           <span>Характеристики</span>
-          <CharsList chars={chars} setChars={setChars} />
+          <CharsList chars={chars} />
         </div>
         <div className="input_box">
           <span>Категорії</span>
-          <Categories categories={categories} setCategories={setCategories} />
+          <Categories categories={categories} />
         </div>
         <div className="input_box">
           <span>Ціна (грн.)</span>
           <input
             type="number"
+            required
+            ref={priceRef}
             placeholder="XXXX"
             min={0}
-            required
-            onChange={(ev) => setPrice(parseInt(ev.target.value))}
+            onChange={editHandler}
           />
         </div>
       </form>
-    </>
+    </ProductFormContext.Provider>
   );
 };
